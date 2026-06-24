@@ -41,6 +41,6 @@ public class TravelPack implements ModInitializer {
             return sleepingDirection;
         });
 
-        LOGGER.info("MyMod initialized!");
+        LOGGER.info("TravelPack initialized!");
     }
 }

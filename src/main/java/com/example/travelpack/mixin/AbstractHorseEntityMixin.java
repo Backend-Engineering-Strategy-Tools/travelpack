@@ -6,15 +6,16 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.AbstractHorseEntity;
 import net.minecraft.entity.passive.HorseEntity;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AbstractHorseEntity.class)
 public abstract class AbstractHorseEntityMixin implements BedrollEquipped {
@@ -23,36 +24,45 @@ public abstract class AbstractHorseEntityMixin implements BedrollEquipped {
     private static final TrackedData<ItemStack> BEDROLL_STACK =
             DataTracker.registerData(AbstractHorseEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
 
+    @Unique
+    private ItemStack mymod_storedBedroll = ItemStack.EMPTY;
+
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     private void mymod_addBedrollTracking(DataTracker.Builder builder, CallbackInfo ci) {
         builder.add(BEDROLL_STACK, ItemStack.EMPTY);
     }
 
-    /**
-     * Inject into the STATIC getInventorySize(int columns) so both the server entity
-     * AND the client-side screen-handler factory see the larger size.
-     * columns == 0 means "no chest" (regular horses, zombie/skeleton horses, llamas
-     * without chest) — we add one extra slot for the bedroll.
-     */
-    @Inject(method = "getInventorySize(I)I", at = @At("RETURN"), cancellable = true)
-    private static void mymod_increaseInventorySize(int columns, CallbackInfoReturnable<Integer> cir) {
-        if (columns == 0) {
-            int was = cir.getReturnValue();
-            cir.setReturnValue(was + 1);
+    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+    private void mymod_writeBedroll(NbtCompound nbt, CallbackInfo ci) {
+        if (!((Object) this instanceof HorseEntity)) return;
+        if (!mymod_storedBedroll.isEmpty()) {
+            RegistryWrapper.WrapperLookup regs = ((AbstractHorseEntity)(Object)this).getWorld().getRegistryManager();
+            nbt.put("TravelPackBedroll", mymod_storedBedroll.toNbt(regs));
         }
     }
 
-    /** Keep the synced TrackedData in step with the actual inventory slot. */
-    @Inject(method = "onInventoryChanged", at = @At("HEAD"))
-    private void mymod_syncBedrollItem(Inventory inventory, CallbackInfo ci) {
-        AbstractHorseEntity self = (AbstractHorseEntity) (Object) this;
-        if (self.getWorld() instanceof ServerWorld && self instanceof HorseEntity && inventory.size() > 1) {
-            self.getDataTracker().set(BEDROLL_STACK, inventory.getStack(1).copy());
+    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+    private void mymod_readBedroll(NbtCompound nbt, CallbackInfo ci) {
+        if (!((Object) this instanceof HorseEntity)) return;
+        if (nbt.contains("TravelPackBedroll", NbtElement.COMPOUND_TYPE)) {
+            RegistryWrapper.WrapperLookup regs = ((AbstractHorseEntity)(Object)this).getWorld().getRegistryManager();
+            mymod_storedBedroll = ItemStack.fromNbt(regs, nbt.getCompound("TravelPackBedroll"))
+                    .orElse(ItemStack.EMPTY);
+            ((AbstractHorseEntity)(Object)this).getDataTracker().set(BEDROLL_STACK, mymod_storedBedroll.copy());
         }
     }
 
     @Override
     public ItemStack mymod_getBedrollStack() {
-        return ((AbstractHorseEntity) (Object) this).getDataTracker().get(BEDROLL_STACK);
+        return ((AbstractHorseEntity)(Object)this).getDataTracker().get(BEDROLL_STACK);
+    }
+
+    @Override
+    public void mymod_setBedrollStack(ItemStack stack) {
+        mymod_storedBedroll = stack.copy();
+        AbstractHorseEntity self = (AbstractHorseEntity)(Object)this;
+        if (self.getWorld() instanceof ServerWorld) {
+            self.getDataTracker().set(BEDROLL_STACK, stack.copy());
+        }
     }
 }
