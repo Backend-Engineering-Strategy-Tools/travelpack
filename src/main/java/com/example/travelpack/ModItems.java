@@ -1,6 +1,7 @@
 package com.example.travelpack;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -14,16 +15,17 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class ModItems {
 
     public static final Item SLEEPING_BAG = register("sleeping_bag",
             key -> new BlockItem(ModBlocks.SLEEPING_BAG, new Item.Settings().registryKey(key).maxCount(16)) {
                 @Override
-                public void appendTooltip(ItemStack stack, TooltipContext context,
-                                          List<Text> tooltip, TooltipType type) {
-                    tooltip.add(Text.translatable("item.travelpack.sleeping_bag.tooltip")
+                public void appendTooltip(ItemStack stack, Item.TooltipContext context,
+                                          TooltipDisplayComponent display,
+                                          Consumer<Text> tooltip, TooltipType type) {
+                    tooltip.accept(Text.translatable("item.travelpack.sleeping_bag.tooltip")
                             .formatted(Formatting.GRAY));
                 }
             }

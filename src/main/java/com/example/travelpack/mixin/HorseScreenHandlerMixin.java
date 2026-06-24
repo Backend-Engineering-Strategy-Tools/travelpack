@@ -31,7 +31,7 @@ public abstract class HorseScreenHandlerMixin extends ScreenHandler {
 
         SimpleInventory bedrollInv = new SimpleInventory(1);
 
-        if (entity.getWorld() instanceof ServerWorld && entity instanceof BedrollEquipped be) {
+        if (entity.getEntityWorld() instanceof ServerWorld && entity instanceof BedrollEquipped be) {
             ItemStack stored = be.mymod_getBedrollStack();
             if (!stored.isEmpty()) {
                 bedrollInv.setStack(0, stored.copy());

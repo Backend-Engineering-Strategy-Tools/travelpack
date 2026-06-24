@@ -28,13 +28,13 @@ public class TravelPack implements ModInitializer {
 
         // Sleeping bags do NOT set the player's spawn point
         EntitySleepEvents.ALLOW_SETTING_SPAWN.register((player, sleepingPos) -> {
-            BlockState state = player.getWorld().getBlockState(sleepingPos);
+            BlockState state = player.getEntityWorld().getBlockState(sleepingPos);
             return !(state.getBlock() instanceof SleepingBagBlock);
         });
 
         // Player faces the direction the sleeping bag's head points
         EntitySleepEvents.MODIFY_SLEEPING_DIRECTION.register((entity, sleepingPos, sleepingDirection) -> {
-            BlockState state = entity.getWorld().getBlockState(sleepingPos);
+            BlockState state = entity.getEntityWorld().getBlockState(sleepingPos);
             if (state.getBlock() instanceof SleepingBagBlock) {
                 return state.get(HorizontalFacingBlock.FACING);
             }

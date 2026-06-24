@@ -7,10 +7,9 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.AbstractHorseEntity;
 import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,24 +31,21 @@ public abstract class AbstractHorseEntityMixin implements BedrollEquipped {
         builder.add(BEDROLL_STACK, ItemStack.EMPTY);
     }
 
-    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-    private void mymod_writeBedroll(NbtCompound nbt, CallbackInfo ci) {
+    @Inject(method = "writeCustomData", at = @At("TAIL"))
+    private void mymod_writeBedroll(WriteView view, CallbackInfo ci) {
         if (!((Object) this instanceof HorseEntity)) return;
         if (!mymod_storedBedroll.isEmpty()) {
-            RegistryWrapper.WrapperLookup regs = ((AbstractHorseEntity)(Object)this).getWorld().getRegistryManager();
-            nbt.put("TravelPackBedroll", mymod_storedBedroll.toNbt(regs));
+            view.put("TravelPackBedroll", ItemStack.OPTIONAL_CODEC, mymod_storedBedroll);
         }
     }
 
-    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-    private void mymod_readBedroll(NbtCompound nbt, CallbackInfo ci) {
+    @Inject(method = "readCustomData", at = @At("TAIL"))
+    private void mymod_readBedroll(ReadView view, CallbackInfo ci) {
         if (!((Object) this instanceof HorseEntity)) return;
-        if (nbt.contains("TravelPackBedroll", NbtElement.COMPOUND_TYPE)) {
-            RegistryWrapper.WrapperLookup regs = ((AbstractHorseEntity)(Object)this).getWorld().getRegistryManager();
-            mymod_storedBedroll = ItemStack.fromNbt(regs, nbt.getCompound("TravelPackBedroll"))
-                    .orElse(ItemStack.EMPTY);
-            ((AbstractHorseEntity)(Object)this).getDataTracker().set(BEDROLL_STACK, mymod_storedBedroll.copy());
-        }
+        view.read("TravelPackBedroll", ItemStack.OPTIONAL_CODEC).ifPresent(loaded -> {
+            mymod_storedBedroll = loaded;
+            ((AbstractHorseEntity)(Object)this).getDataTracker().set(BEDROLL_STACK, loaded.copy());
+        });
     }
 
     @Override
@@ -61,7 +57,7 @@ public abstract class AbstractHorseEntityMixin implements BedrollEquipped {
     public void mymod_setBedrollStack(ItemStack stack) {
         mymod_storedBedroll = stack.copy();
         AbstractHorseEntity self = (AbstractHorseEntity)(Object)this;
-        if (self.getWorld() instanceof ServerWorld) {
+        if (self.getEntityWorld() instanceof ServerWorld) {
             self.getDataTracker().set(BEDROLL_STACK, stack.copy());
         }
     }
