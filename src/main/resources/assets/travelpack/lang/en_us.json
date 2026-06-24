@@ -1,5 +1,9 @@
 {
   "block.travelpack.sleeping_bag": "Sleeping Bag",
   "item.travelpack.sleeping_bag": "Sleeping Bag",
-  "item.travelpack.sleeping_bag.tooltip": "A lightweight bedroll for travelers"
+  "item.travelpack.sleeping_bag.tooltip": "A lightweight bedroll for travelers",
+  "item.travelpack.wooden_bucket": "Wooden Bucket",
+  "item.travelpack.wooden_bucket.tooltip": "Holds water, but not lava.",
+  "item.travelpack.wooden_water_bucket": "Wooden Water Bucket",
+  "item.travelpack.wooden_water_bucket.tooltip": "Handle with care."
 }

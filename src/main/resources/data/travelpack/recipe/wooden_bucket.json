@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "misc",
+    "pattern": [
+        "P P",
+        "CPC"
+    ],
+    "key": {
+        "P": "#minecraft:planks",
+        "C": "minecraft:copper_ingot"
+    },
+    "result": {
+        "id": "travelpack:wooden_bucket",
+        "count": 1
+    }
+}

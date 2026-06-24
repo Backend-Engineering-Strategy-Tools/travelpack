@@ -1,5 +1,9 @@
 {
   "block.travelpack.sleeping_bag": "Schlafsack",
   "item.travelpack.sleeping_bag": "Schlafsack",
-  "item.travelpack.sleeping_bag.tooltip": "Ein leichtes Bett für Reisende"
+  "item.travelpack.sleeping_bag.tooltip": "Ein leichtes Bett für Reisende",
+  "item.travelpack.wooden_bucket": "Holzeimer",
+  "item.travelpack.wooden_bucket.tooltip": "Hält Wasser, aber keine Lava.",
+  "item.travelpack.wooden_water_bucket": "Holzeimer mit Wasser",
+  "item.travelpack.wooden_water_bucket.tooltip": "Vorsicht walten lassen."
 }

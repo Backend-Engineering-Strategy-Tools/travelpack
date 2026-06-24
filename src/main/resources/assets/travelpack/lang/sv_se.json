@@ -1,5 +1,9 @@
 {
   "block.travelpack.sleeping_bag": "Sovsäck",
   "item.travelpack.sleeping_bag": "Sovsäck",
-  "item.travelpack.sleeping_bag.tooltip": "En lätt bädd för resenärer"
+  "item.travelpack.sleeping_bag.tooltip": "En lätt bädd för resenärer",
+  "item.travelpack.wooden_bucket": "Träspann",
+  "item.travelpack.wooden_bucket.tooltip": "Håller vatten, men inte lava.",
+  "item.travelpack.wooden_water_bucket": "Träspann med vatten",
+  "item.travelpack.wooden_water_bucket.tooltip": "Hantera varsamt."
 }
