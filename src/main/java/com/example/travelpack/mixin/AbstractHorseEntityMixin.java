@@ -46,8 +46,8 @@ public abstract class AbstractHorseEntityMixin implements BedrollEquipped {
     @Inject(method = "onInventoryChanged", at = @At("HEAD"))
     private void mymod_syncBedrollItem(Inventory inventory, CallbackInfo ci) {
         AbstractHorseEntity self = (AbstractHorseEntity) (Object) this;
-        if (self.getWorld() instanceof ServerWorld && self instanceof HorseEntity && inventory.size() > 1) {
-            self.getDataTracker().set(BEDROLL_STACK, inventory.getStack(1).copy());
+        if (self.getWorld() instanceof ServerWorld && self instanceof HorseEntity && inventory.size() > 2) {
+            self.getDataTracker().set(BEDROLL_STACK, inventory.getStack(2).copy());
         }
     }
 

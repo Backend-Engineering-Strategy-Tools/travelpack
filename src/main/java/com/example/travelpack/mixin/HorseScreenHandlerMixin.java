@@ -29,7 +29,7 @@ public abstract class HorseScreenHandlerMixin extends ScreenHandler {
                 entity.getClass().getSimpleName(), inventory.size());
         if (entity instanceof HorseEntity && inventory.size() > 1) {
             TravelPack.LOGGER.info("[MyMod] Adding bedroll slot at index 1");
-            this.addSlot(new BedrollSlot(inventory, 1, 8, 54));
+            this.addSlot(new BedrollSlot(inventory, 2, 8, 54));
         }
     }
 }

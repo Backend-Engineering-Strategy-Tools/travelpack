@@ -58,5 +58,6 @@ modrinth {
     changelog = "See https://travelpack.mjli.org for details."
     dependencies {
         required.project "fabric-api"
+        optional.project "patchouli"
     }
 }
