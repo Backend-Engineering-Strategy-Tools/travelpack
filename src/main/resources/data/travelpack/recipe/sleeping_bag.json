@@ -1,0 +1,13 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "WWW"
+    ],
+    "key": {
+        "W": "#minecraft:wool"
+    },
+    "result": {
+        "id": "travelpack:sleeping_bag",
+        "count": 1
+    }
+}

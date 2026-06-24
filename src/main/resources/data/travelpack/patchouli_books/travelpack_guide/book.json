@@ -1,0 +1,8 @@
+{
+  "name": "TravelPack Guide",
+  "landing_text": "A guide to the TravelPack mod — sleeping bags, horse bedrolls, and travel utilities.",
+  "namespace": "travelpack",
+  "model": "travelpack:sleeping_bag",
+  "creative_tab": "misc",
+  "version": "1"
+}

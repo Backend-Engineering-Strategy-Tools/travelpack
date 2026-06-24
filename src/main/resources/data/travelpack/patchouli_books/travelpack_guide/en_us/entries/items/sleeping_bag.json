@@ -1,0 +1,26 @@
+{
+  "name": "Sleeping Bag",
+  "category": "travelpack:items",
+  "icon": "travelpack:sleeping_bag",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The $(item)Sleeping Bag$() is a lightweight bedroll for adventurers on the road. It can be used as a portable bed to skip the night without needing to place a full bed block."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "travelpack:sleeping_bag",
+      "text": "Craft with any three wool blocks in a row."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Horse Bedroll",
+      "text": "A $(item)Sleeping Bag$() can be placed into a horse's dedicated bedroll slot, found in the horse inventory screen next to the saddle and armour slots. When equipped, the roll is visible across the horse's hindquarters."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "travelpack:sleeping_bag_to_bed",
+      "text": "Combine a sleeping bag with three planks to craft a standard $(item)White Bed$()."
+    }
+  ]
+}

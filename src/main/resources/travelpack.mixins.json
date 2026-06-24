@@ -1,0 +1,18 @@
+{
+    "required": true,
+    "package": "com.example.travelpack.mixin",
+    "compatibilityLevel": "JAVA_21",
+    "mixins": [
+        "AbstractHorseEntityMixin",
+        "HorseScreenHandlerMixin"
+    ],
+    "client": [
+        "client.HandledScreenAccessor",
+        "client.HorseEntityRenderStateMixin",
+        "client.HorseEntityRendererMixin",
+        "client.HorseScreenMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

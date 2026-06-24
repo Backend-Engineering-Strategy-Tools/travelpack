@@ -1,0 +1,33 @@
+{
+    "schemaVersion": 1,
+    "id": "travelpack",
+    "version": "${version}",
+    "name": "TravelPack",
+    "description": "Adds travel utilities for adventurers on the road",
+    "authors": ["senare"],
+    "contact": {
+        "homepage": "https://travelpack.mjli.org",
+        "issues": "https://github.com/senare/travelpack/issues",
+        "sources": "https://github.com/senare/travelpack"
+    },
+    "license": "MIT",
+    "icon": "assets/travelpack/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.example.travelpack.TravelPack"
+        ]
+    },
+    "mixins": [
+        "travelpack.mixins.json"
+    ],
+    "suggests": {
+        "patchouli": "*"
+    },
+    "depends": {
+        "fabricloader": ">=0.15.0",
+        "minecraft": "~1.21.4",
+        "java": ">=21",
+        "fabric-api": "*"
+    }
+}
