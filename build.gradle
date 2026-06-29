@@ -1,7 +1,7 @@
 plugins {
     id 'fabric-loom' version '1.17.12'
     id 'maven-publish'
-    id 'com.modrinth.minotaur' version '2.+'
+    id 'me.modmuss50.mod-publish-plugin' version '2.1.1'
 }
 
 version = project.mod_version
@@ -57,17 +57,25 @@ def changelogText = {
     return end >= 0 ? content.substring(start, end).trim() : content.substring(start).trim()
 }()
 
-modrinth {
-    token = System.getenv("MODRINTH_TOKEN")
-    projectId = project.modrinth_project_id
-    versionNumber = project.mod_version
-    versionType = "release"
-    uploadFile = remapJar
-    gameVersions = ["1.21.11"]
-    loaders = ["fabric"]
+publishMods {
+    file = remapJar.archiveFile
     changelog = changelogText
-    dependencies {
-        required.project "fabric-api"
-        optional.project "patchouli"
+    type = STABLE
+    modLoaders.add("fabric")
+
+    modrinth {
+        projectId = project.modrinth_project_id
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        minecraftVersions.add(project.minecraft_version)
+        requires { slug = "fabric-api" }
+        optional { slug = "patchouli" }
+    }
+
+    curseforge {
+        projectId = project.curseforge_project_id
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        minecraftVersions.add(project.minecraft_version)
+        requires { slug = "fabric-api" }
+        optional { slug = "patchouli" }
     }
 }

@@ -33,7 +33,7 @@ public class WoodenBucketItem extends Item {
         BlockState state = world.getBlockState(pos);
         FluidState fluid = state.getFluidState();
 
-        if (fluid.isStill() && fluid.isOf(Fluids.WATER)) {
+        if (fluid.isStill() && fluid.isOf(Fluids.WATER) && state.isOf(Blocks.WATER)) {
             if (world instanceof ServerWorld) {
                 world.setBlockState(pos, Blocks.AIR.getDefaultState());
                 world.playSound(null, user.getX(), user.getY(), user.getZ(),
@@ -44,7 +44,7 @@ public class WoodenBucketItem extends Item {
         }
 
         if (fluid.isStill() && fluid.isOf(Fluids.LAVA)) {
-            if (world instanceof ServerWorld) {
+            if (world instanceof ServerWorld && !user.isCreative()) {
                 world.playSound(null, user.getX(), user.getY(), user.getZ(),
                         SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.PLAYERS, 1.0f, 1.0f);
                 user.getStackInHand(hand).decrement(1);

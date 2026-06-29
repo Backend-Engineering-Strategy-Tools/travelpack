@@ -66,8 +66,9 @@ public class ModItems {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries ->
                 entries.add(SLEEPING_BAG)
         );
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries ->
-                entries.add(WOODEN_BUCKET)
-        );
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries -> {
+            entries.add(WOODEN_BUCKET);
+            entries.add(WOODEN_WATER_BUCKET);
+        });
     }
 }

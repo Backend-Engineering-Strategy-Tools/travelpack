@@ -73,6 +73,10 @@ public class SleepingBagBlock extends HorizontalFacingBlock {
             BlockState otherState = world.getBlockState(otherPos);
             if (otherState.isOf(this) && otherState.get(PART) != state.get(PART)) {
                 world.setBlockState(otherPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL | Block.SKIP_DROPS);
+                // Loot table only fires for the FOOT half; drop the item explicitly when HEAD is broken
+                if (state.get(PART) == BedPart.HEAD && !player.isCreative()) {
+                    Block.dropStack(world, otherPos, new ItemStack(asItem()));
+                }
             }
         }
         return super.onBreak(world, pos, state, player);

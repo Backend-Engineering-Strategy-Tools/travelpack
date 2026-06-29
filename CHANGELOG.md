@@ -2,6 +2,14 @@
 
 All notable changes to TravelPack are documented here.
 
+## [0.1.4] - 2026-06-29
+
+### Fixed
+- Mining the head half of a placed Sleeping Bag now drops the item correctly
+- Wooden Bucket no longer destroys waterlogged blocks (slabs, stairs, etc.) when scooping water
+- Wooden Bucket lava interaction no longer consumes the bucket in creative mode
+- Wooden Water Bucket is now accessible in the creative inventory (Tools tab)
+
 ## [0.1.3] - 2026-06-25
 
 ### Added

@@ -262,3 +262,14 @@ This only runs when you push a git tag (e.g. `git tag v0.1.0 && git push --tags`
 - [Fabric Discord](https://discord.gg/v6v4pMv) — community support
 - [Fabric API Javadoc](https://maven.fabricmc.net/docs/fabric-api-0.114.0+1.21.4/)
 - [Minecraft Mappings Viewer](https://linkie.shedaniel.dev/mappings) — look up obfuscated class/method names
+
+
+## Release
+
+To 'release' create a new tag for reference
+
+You can set the variable in your current shell session, and use it to tag and push
+
+```bash
+export VERSION="v0.0.1" &&  git tag -a "$VERSION" -m "Release $VERSION" && git push origin "$VERSION"
+```
