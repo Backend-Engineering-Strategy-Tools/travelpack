@@ -75,6 +75,8 @@ publishMods {
         projectId = project.curseforge_project_id
         accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
         minecraftVersions.add(project.minecraft_version)
+        client = true
+        server = true
         requires { slug = "fabric-api" }
         optional { slug = "patchouli" }
     }
